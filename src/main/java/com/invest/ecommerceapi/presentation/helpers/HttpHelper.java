@@ -2,6 +2,7 @@ package com.invest.ecommerceapi.presentation.helpers;
 
 import com.invest.ecommerceapi.domain.interfaces.Response;
 import com.invest.ecommerceapi.presentation.errors.InternalServerError;
+import com.invest.ecommerceapi.presentation.errors.UnauthorizedError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -26,5 +27,9 @@ public class HttpHelper {
 
     public static ResponseEntity<Response> ok(Response data) {
         return ResponseEntity.status(HttpStatus.OK).body(data);
+    }
+
+    public static ResponseEntity<Response> unauthrorized() {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new UnauthorizedError());
     }
 }
