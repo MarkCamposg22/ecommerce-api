@@ -1,5 +1,6 @@
-package com.invest.ecommerceapi.entity;
+package com.invest.ecommerceapi.infra.entities;
 
+import com.invest.ecommerceapi.domain.schemas.UserRegisterRequestSchema;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -42,6 +43,17 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
+
+    public User() {}
+
+    public User(UserRegisterRequestSchema schema) {
+        this.name = schema.getName();
+        this.email = schema.getEmail();
+        this.password = schema.getPassword();
+        this.owner = schema.isOwner();
+        this.cep = schema.getCep();
+        this.address = schema.getAddress();
+    }
 
     public String getId() {
         return id;
