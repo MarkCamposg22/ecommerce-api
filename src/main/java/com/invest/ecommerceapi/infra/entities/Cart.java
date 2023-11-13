@@ -1,4 +1,4 @@
-package com.invest.ecommerceapi.entity;
+package com.invest.ecommerceapi.infra.entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,7 +19,8 @@ public class Cart {
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToMany(mappedBy = "cart")
+    @ManyToMany
+    @JoinTable(name = "cart_product", joinColumns = @JoinColumn(name = "cartId"), inverseJoinColumns = @JoinColumn(name = "productId"))
     private List<Product> products = new ArrayList<>();
 
     @CreationTimestamp

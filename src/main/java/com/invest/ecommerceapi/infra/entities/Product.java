@@ -1,4 +1,4 @@
-package com.invest.ecommerceapi.entity;
+package com.invest.ecommerceapi.infra.entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,15 +29,15 @@ public class Product {
     @Column(nullable = false)
     private int quantity;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
     private ProductCategory category;
 
     @ManyToMany(mappedBy = "products")
     private List<Order> orders = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "cartId")
-    private Cart cart;
+    @ManyToMany(mappedBy = "products")
+    private List<Cart> carts = new ArrayList<>();
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
@@ -113,12 +113,12 @@ public class Product {
         this.orders = orders;
     }
 
-    public Cart getCart() {
-        return cart;
+    public List<Cart> getCart() {
+        return this.carts;
     }
 
-    public void setCart(Cart cart) {
-        this.cart = cart;
+    public void setCart(List<Cart> carts) {
+        this.carts = carts;
     }
 
     public Date getCreatedAt() {
