@@ -4,14 +4,12 @@ import com.invest.ecommerceapi.application.services.user.UserRegisterService;
 import com.invest.ecommerceapi.application.validations.EmailValidation;
 import com.invest.ecommerceapi.application.validations.RequiredFieldValidation;
 import com.invest.ecommerceapi.application.validations.ValidationComposite;
-import com.invest.ecommerceapi.domain.interfaces.Controller;
 import com.invest.ecommerceapi.domain.interfaces.Response;
 import com.invest.ecommerceapi.domain.interfaces.Validation;
 import com.invest.ecommerceapi.domain.schemas.UserRegisterRequestSchema;
 import com.invest.ecommerceapi.domain.schemas.UserResponseSchema;
 import com.invest.ecommerceapi.presentation.errors.EmailInUseError;
 import com.invest.ecommerceapi.presentation.helpers.HttpHelper;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,7 +24,7 @@ import com.invest.ecommerceapi.presentation.controllers.UserController;
 import java.util.ArrayList;
 
 @RestController
-public class UserRegisterController extends UserController implements Controller<UserRegisterRequestSchema> {
+public class UserRegisterController extends UserController {
     @Autowired
     private UserRegisterService userRegisterService;
 
@@ -40,7 +38,6 @@ public class UserRegisterController extends UserController implements Controller
         this.validator = new ValidationComposite(validations);
     }
 
-    @Override
     @Operation(summary = "Registrar um novo usuário.", description = "Registra um novo usuário pelo: e-mail, nome e senha")
     @ApiResponses(value = {
             @ApiResponse(

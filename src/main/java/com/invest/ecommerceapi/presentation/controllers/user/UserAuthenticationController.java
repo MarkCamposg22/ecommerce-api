@@ -4,7 +4,6 @@ import com.invest.ecommerceapi.application.services.user.UserAuthenticationServi
 import com.invest.ecommerceapi.application.validations.EmailValidation;
 import com.invest.ecommerceapi.application.validations.RequiredFieldValidation;
 import com.invest.ecommerceapi.application.validations.ValidationComposite;
-import com.invest.ecommerceapi.domain.interfaces.Controller;
 import com.invest.ecommerceapi.domain.interfaces.Response;
 import com.invest.ecommerceapi.domain.interfaces.Validation;
 import com.invest.ecommerceapi.domain.schemas.UserAuthenticationRequestSchema;
@@ -17,7 +16,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.hibernate.jdbc.Expectation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 
 @RestController
-public class UserAuthenticationController extends UserController implements Controller<UserAuthenticationRequestSchema> {
+public class UserAuthenticationController extends UserController {
     @Autowired
     private UserAuthenticationService userAuthenticationService;
 
@@ -41,7 +39,6 @@ public class UserAuthenticationController extends UserController implements Cont
         this.validator = new ValidationComposite(validations);
     }
 
-    @Override
     @Operation(summary = "Autenticar um usuário", description = "Autentica um usuário pelo: e-mail e senha")
     @ApiResponses(value = {
             @ApiResponse(
