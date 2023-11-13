@@ -23,4 +23,8 @@ public class HttpHelper {
     public static ResponseEntity<Response> forbidden(Response error) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
     }
+
+    public static ResponseEntity<Response> ok(Response data) {
+        return ResponseEntity.status(HttpStatus.OK).body(data);
+    }
 }
