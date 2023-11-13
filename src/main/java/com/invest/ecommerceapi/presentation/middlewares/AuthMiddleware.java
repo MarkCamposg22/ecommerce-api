@@ -12,14 +12,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class AuthMiddleware extends OncePerRequestFilter {
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {}
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        filterChain.doFilter(request, response);
+    }
 
     public boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        return path.startsWith("/swagger-ui") || path.startsWith("/v3") || path.startsWith("/user/register") || path.startsWith("/user/login");
+        List<String> nonAuthRoutes = Arrays.asList(
+                "/swagger-ui", "/v3", "/user/register", "/user/login", "/product-category/get-all"
+        );
+        return nonAuthRoutes.stream().anyMatch(path::startsWith);
     }
 
     public void sendUnauthorizedResponse(HttpServletResponse response) throws IOException {
