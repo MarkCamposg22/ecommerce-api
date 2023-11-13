@@ -3,7 +3,9 @@ package com.invest.ecommerceapi.infra.entities;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "product_category")
@@ -15,14 +17,19 @@ public class ProductCategory {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "productId")
-    private Product product;
+    @OneToMany(mappedBy = "category")
+    private List<Product> products = new ArrayList<>();
 
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private Date createdAt;
+
+    public ProductCategory() {}
+
+    public ProductCategory(String name) {
+        this.name = name;
+    }
 
     public String getId() {
         return id;
@@ -40,12 +47,12 @@ public class ProductCategory {
         this.name = name;
     }
 
-    public Product getProduct() {
-        return product;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProduct(List<Product> products) {
+        this.products = products;
     }
 
     public Date getCreatedAt() {
