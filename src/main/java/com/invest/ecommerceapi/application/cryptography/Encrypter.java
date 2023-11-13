@@ -2,15 +2,21 @@ package com.invest.ecommerceapi.application.cryptography;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import java.security.Key;
 import java.util.Date;
 
 @Service
 public class Encrypter {
-    private final Key secret = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+    private Key secret;
+
+    @PostConstruct
+    public void init() {
+        String secretKey = "12345678901234567890123456789012";
+        this.secret = Keys.hmacShaKeyFor(secretKey.getBytes());
+    }
 
     public String encrypt(Object input) {
         Date now = new Date();
